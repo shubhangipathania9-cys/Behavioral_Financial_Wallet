@@ -1,8 +1,11 @@
-from flask import Flask , render_template , request
+import email
+
+from flask import Flask,render_template,request,redirect,url_for,session  
 
 # create the main flask application
 
 app = Flask(__name__)
+app.secret_key = 'replace_this_with_a_random_secret_key'   
 
 
 @app.route('/')
@@ -35,6 +38,25 @@ def register():
 
     return render_template("register.html")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+        password = request.form["password"]
+    # Temporary user (until we connect a database)
+
+        stored_email = "test@smartwallet.com"
+        stored_password = "Password123!"
+
+        # Authentication will go here.
+        if email != stored_email:               
+            return render_template(
+            "login.html",
+            error="Invalid email or password."
+        
+            )
+
+    return render_template("login.html")
 
