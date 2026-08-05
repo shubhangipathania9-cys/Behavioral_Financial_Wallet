@@ -12,9 +12,9 @@ app.secret_key = 'replace_this_with_a_random_secret_key'
 def home():
     return render_template("index.html")
 
-@app.route('/login')
-def login():
-    return render_template("login.html")
+@app.route("/dashboard")
+def dashboard():
+    return "<h1>Welcome to Smart Wallet Dashboard!</h1>"
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -55,8 +55,16 @@ def login():
             return render_template(
             "login.html",
             error="Invalid email or password."
-        
             )
-
+        if password != stored_password:
+            return render_template(
+            "login.html",
+            error="Invalid email or password."
+    )
+        session["user"] = email
+        return redirect(url_for("dashboard"))
     return render_template("login.html")
+if __name__ == "__main__":
+    app.run(debug=True)
+        
 
