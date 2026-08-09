@@ -1,3 +1,6 @@
+
+import sqlite3
+import bcrypt
 import email
 
 from flask import Flask,render_template,request,redirect,url_for,session  
@@ -15,7 +18,7 @@ def home():
 @app.route("/dashboard")
 def dashboard():
     return "<h1>Welcome to Smart Wallet Dashboard!</h1>"
-
+            
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
@@ -25,18 +28,42 @@ def register():
         email = request.form["email"]
         password = request.form["password"]
         confirm_password = request.form["confirm_password"]
-
-        print("Name:", name)
-        print("Email:", email)
-        print("Password:", password)
-        print("Confirm Password:", confirm_password)
-
-        if password != confirm_password:
-            print("Passwords do not match. Please try again.")
+        if not name or not email or not password or not confirm_password:
+            return render_template("register.html", error="Please fill in all fields.")
+        connection = sqlite3.connect("database/smartwallet.db")    
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM users WHERE email=?", (email,))
+        user = cursor.fetchone()
+        if user is not None:
+            return render_template("register.html", error="Email already exists. Please Login.")
         else:
-            print("Account created successfully!")
+            if password != confirm_password:
+                return render_template("register.html", error="Passwords do not match. Please try again.")
+            if len(password) < 8:
+                return render_template("register.html", error="Password must be at least 8 characters long.")
+            if not any(char.isdigit() for char in password):
+                return render_template("register.html", error="Password must contain at least one number.")
+            if not any(char.isupper() for char in password):
+                return render_template("register.html", error="Password must contain at least one uppercase letter.")
+            if not any(char.islower() for char in password):
+                return render_template("register.html", error="Password must contain at least one lowercase letter.")
+            if not any(char in "!@#$%^&*()-_=+[{]}\|;:'\",<.>/?`~" for char in password):
+                return render_template("register.html", error="Password must contain at least one special character.")
 
+            hashed_password = bcrypt.hashpw(
+                password.encode("utf-8"),
+                bcrypt.gensalt()
+        )
+            cursor.execute(
+                "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+                (name, email, hashed_password)
+)
+
+        connection.commit()
+        connection.close()
+        return render_template("register.html", message="Account created successfully!")
     return render_template("register.html")
+ 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
