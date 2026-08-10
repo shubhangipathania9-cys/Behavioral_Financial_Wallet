@@ -72,24 +72,40 @@ def login():
 
         email = request.form["email"]
         password = request.form["password"]
-    # Temporary user (until we connect a database)
 
-        stored_email = "test@smartwallet.com"
-        stored_password = "Password123!"
+        connection = sqlite3.connect("database/smartwallet.db")
+        cursor = connection.cursor()
 
-        # Authentication will go here.
-        if email != stored_email:               
+        cursor.execute(
+            "SELECT * FROM users WHERE email = ?",
+            (email,)
+        )
+
+        user = cursor.fetchone()
+
+        if user is None:
+            connection.close()
             return render_template(
-            "login.html",
-            error="Invalid email or password."
+                "login.html",
+                error="Invalid email or password."
             )
-        if password != stored_password:
-            return render_template(
+
+        stored_hash = user[3]
+
+        if bcrypt.checkpw(
+            password.encode("utf-8"),
+            stored_hash
+        ):
+            session["user_id"] = user[0]
+            connection.close()
+            return redirect(url_for("dashboard"))
+
+        connection.close()
+        return render_template(
             "login.html",
             error="Invalid email or password."
-    )
-        session["user"] = email
-        return redirect(url_for("dashboard"))
+        )
+
     return render_template("login.html")
 if __name__ == "__main__":
     app.run(debug=True)
