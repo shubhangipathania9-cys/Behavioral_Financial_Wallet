@@ -1,4 +1,5 @@
 
+from multiprocessing.dummy import connection
 import sqlite3
 import bcrypt
 import email
@@ -17,8 +18,28 @@ def home():
 
 @app.route("/dashboard")
 def dashboard():
-    return "<h1>Welcome to Smart Wallet Dashboard!</h1>"
-            
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+    user_id = session["user_id"]
+    connection = sqlite3.connect("database/smartwallet.db")
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "SELECT * FROM users WHERE id = ?",
+        (user_id,)
+    )
+    user = cursor.fetchone()
+    user = cursor.fetchone()
+
+    if user is None:
+        connection.close()
+        session.clear()
+        return redirect(url_for("login"))
+
+    connection.close()
+
+    return render_template("dashboard.html", user=user)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
