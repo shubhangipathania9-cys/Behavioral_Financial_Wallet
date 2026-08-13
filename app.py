@@ -29,7 +29,6 @@ def dashboard():
         (user_id,)
     )
     user = cursor.fetchone()
-    user = cursor.fetchone()
 
     if user is None:
         connection.close()
