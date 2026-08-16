@@ -50,33 +50,38 @@ def register():
         confirm_password = request.form["confirm_password"]
         if not name or not email or not password or not confirm_password:
             return render_template("register.html", error="Please fill in all fields.")
+        if password != confirm_password:
+            return render_template("register.html", error="Passwords do not match. Please try again.")
+        if len(password) < 8:
+            return render_template("register.html", error="Password must be at least 8 characters long.")
+        if not any(char.isdigit() for char in password):
+            return render_template("register.html", error="Password must contain at least one number.")
+        if not any(char.isupper() for char in password):
+            return render_template("register.html", error="Password must contain at least one uppercase letter.")
+        if not any(char.islower() for char in password):
+            return render_template("register.html", error="Password must contain at least one lowercase letter.")
+        if not any(char in "!@#$%^&*()-_=+[{]}\|;:'\",<.>/?`~" for char in password):
+            return render_template("register.html", error="Password must contain at least one special character.")
+
         connection = sqlite3.connect("database/smartwallet.db")    
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM users WHERE email=?", (email,))
         user = cursor.fetchone()
         if user is not None:
-            return render_template("register.html", error="Email already exists. Please Login.")
-        else:
-            if password != confirm_password:
-                return render_template("register.html", error="Passwords do not match. Please try again.")
-            if len(password) < 8:
-                return render_template("register.html", error="Password must be at least 8 characters long.")
-            if not any(char.isdigit() for char in password):
-                return render_template("register.html", error="Password must contain at least one number.")
-            if not any(char.isupper() for char in password):
-                return render_template("register.html", error="Password must contain at least one uppercase letter.")
-            if not any(char.islower() for char in password):
-                return render_template("register.html", error="Password must contain at least one lowercase letter.")
-            if not any(char in "!@#$%^&*()-_=+[{]}\|;:'\",<.>/?`~" for char in password):
-                return render_template("register.html", error="Password must contain at least one special character.")
+            connection.close()
+            return render_template(
+                "register.html",
+                error="Email already exists. Please Login."
+            )
 
-            hashed_password = bcrypt.hashpw(
-                password.encode("utf-8"),
-                bcrypt.gensalt()
+
+        hashed_password = bcrypt.hashpw(
+            password.encode("utf-8"),
+            bcrypt.gensalt()
         )
-            cursor.execute(
-                "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                (name, email, hashed_password)
+        cursor.execute(
+            "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+            (name, email, hashed_password)
 )
 
         connection.commit()
