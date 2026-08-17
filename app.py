@@ -39,6 +39,11 @@ def dashboard():
 
     return render_template("dashboard.html", user=user)
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
