@@ -4,11 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Smart Wallet</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
 
   <body>
-    <h1>Welcome to Smart Wallet, {{ user[1] }}!</h1>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <header class="dashboard-header">
+      <h1>Smart Wallet</h1>
+
+      <div>
+        <span>Welcome, {{ user[1] }}</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </header>
     <main>
       <section>
         <h2>Your Smart Wallet</h2>
@@ -19,14 +29,16 @@
       <section>
         <h2>Overview</h2>
 
-        <div>
-          <h3>Total Saved</h3>
-          <p>₹0</p>
-        </div>
+        <div class="overview-cards">
+          <div class="overview-card">
+            <h3>Total Saved</h3>
+            <p>₹0</p>
+          </div>
 
-        <div>
-          <h3>Active Money Locks</h3>
-          <p>0</p>
+          <div class="overview-card">
+            <h3>Active Money Locks</h3>
+            <p>0</p>
+          </div>
         </div>
       </section>
     </main>
