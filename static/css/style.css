@@ -299,6 +299,7 @@ main p {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 0;
+  color: #059669;
 }
 /* ===========================
    QUICK ACTIONS
@@ -339,4 +340,119 @@ main {
 
 main section {
   margin-bottom: 40px;
+}
+/* =========================
+   MONEY LOCKS SECTION
+========================= */
+
+.locks-section {
+  margin-top: 30px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  color: #1f2937;
+}
+
+.section-header a {
+  text-decoration: none;
+  color: #059669;
+  font-weight: 600;
+}
+
+.locks-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.lock-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.lock-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.lock-top h3 {
+  color: #1f2937;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.amount {
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #059669;
+  border-radius: 10px;
+}
+
+.progress-text {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.overview-card,
+.action-card,
+.lock-card {
+  transition: 0.3s;
+}
+
+.overview-card:hover,
+.action-card:hover,
+.lock-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+main section {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.dashboard-header a {
+  text-decoration: none;
+  background-color: #059669;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.dashboard-header a:hover {
+  background-color: #047857;
 }
