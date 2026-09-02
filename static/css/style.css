@@ -456,3 +456,62 @@ main section {
 .dashboard-header a:hover {
   background-color: #047857;
 }
+/* =========================
+   MONEY LOCKS PAGE
+========================= */
+
+.locks-page-header {
+  position: relative;
+}
+
+.locks-page-header h2 {
+  margin-bottom: 10px;
+}
+
+.locks-page-header p {
+  color: #6b7280;
+}
+
+.create-lock-btn {
+  background-color: #059669;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.create-lock-btn:hover {
+  background-color: #047857;
+  transform: translateY(-2px);
+}
+
+.all-locks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.lock-actions {
+  margin-top: 20px;
+}
+
+.lock-actions button {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #059669;
+  background-color: white;
+  color: #059669;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.lock-actions button:hover {
+  background-color: #059669;
+  color: white;
+}

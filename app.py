@@ -39,6 +39,19 @@ def dashboard():
 
     return render_template("dashboard.html", user=user)
 
+@app.route("/dashboard/money-locks")
+def money_locks():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("money_locks.html")
+@app.route("/dashboard/money-locks/create")
+def create_lock():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("create_lock.html")
+
 @app.route("/logout")
 def logout():
     session.clear()
