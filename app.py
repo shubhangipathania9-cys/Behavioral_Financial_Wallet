@@ -45,11 +45,12 @@ def money_locks():
         return redirect(url_for("login"))
 
     return render_template("money_locks.html")
-@app.route("/dashboard/money-locks/create")
+@app.route("/dashboard/money-locks/create", methods=["GET", "POST"])
 def create_lock():
     if "user_id" not in session:
         return redirect(url_for("login"))
-
+    if request.method == "POST":
+        print(request.form)
     return render_template("create_lock.html")
 
 @app.route("/logout")
