@@ -50,7 +50,15 @@ def create_lock():
     if "user_id" not in session:
         return redirect(url_for("login"))
     if request.method == "POST":
-        print(request.form)
+        lock_name = request.form["lock_name"]
+        goal_amount = request.form["goal_amount"]
+        lock_amount = request.form["lock_amount"]
+        duration = request.form["duration"]
+
+        print(lock_name)
+        print(goal_amount)
+        print(lock_amount)
+        print(duration)
     return render_template("create_lock.html")
 
 @app.route("/logout")
