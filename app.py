@@ -54,7 +54,11 @@ def create_lock():
         goal_amount = request.form["goal_amount"]
         lock_amount = request.form["lock_amount"]
         duration = request.form["duration"]
-
+        if not lock_name or not goal_amount or not lock_amount or not duration:
+            return render_template(
+                "create_lock.html",
+                error="Please fill in all fields."
+            )
         print(lock_name)
         print(goal_amount)
         print(lock_amount)

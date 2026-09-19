@@ -30,7 +30,9 @@
           Set aside money for something important and protect it from impulsive
           spending.
         </p>
-
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
         <form class="lock-form" method="POST">
           <label for="lock-name">Lock Name</label>
           <input
