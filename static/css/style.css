@@ -515,3 +515,8 @@ main section {
   background-color: #059669;
   color: white;
 }
+.error-message {
+  color: #dc2626 !important;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
