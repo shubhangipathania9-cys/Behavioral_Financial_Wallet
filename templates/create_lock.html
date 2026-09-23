@@ -42,6 +42,7 @@
             name="lock_name"
             placeholder="e.g. Vacation Fund"
           />
+          <small>Name your savings goal.</small>
 
           <label for="goal-amount">Goal Amount</label>
           <input
@@ -51,6 +52,7 @@
             placeholder="e.g. 10000"
             min="1"
           />
+          <small>The total amount you want to save.</small>
 
           <label for="lock-amount">Amount to Lock</label>
           <input
@@ -60,6 +62,7 @@
             placeholder="e.g. 2000"
             min="1"
           />
+          <small>The amount you want to lock right now.</small>
 
           <label for="duration">Lock Duration</label>
           <select id="duration" name="duration">
@@ -70,7 +73,7 @@
             <option value="180">6 Months</option>
             <option value="365">1 Year</option>
           </select>
-
+          <small>The duration for which you want to lock the funds.</small>
           <div class="form-actions">
             <a href="{{ url_for('money_locks') }}" class="cancel-btn">
               Cancel

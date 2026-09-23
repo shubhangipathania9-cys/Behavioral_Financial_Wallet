@@ -520,3 +520,10 @@ main section {
   font-weight: 600;
   margin-bottom: 15px;
 }
+.form-group small {
+  display: block;
+  margin-top: 5px;
+  color: #6b7280;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
